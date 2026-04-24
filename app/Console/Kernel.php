@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Jobs\SendWeeklySummaryEmail;
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -12,7 +14,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            User::chunk(100, function ($users) {
+                foreach ($users as $user) {
+                    SendWeeklySummaryEmail::dispatch($user);
+                }
+            });
+        })->weekly()->onOneServer();
     }
 
     /**

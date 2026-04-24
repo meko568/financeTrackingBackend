@@ -31,4 +31,14 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'deepseek' => [
+        'base_uri' => env('DEEPSEEK_API_URL', 'https://api.deepseek.com/v1'),
+        'key' => env('DEEPSEEK_API_KEY'),
+    ],
+
+    'groq' => [
+        'base_uri' => env('GROQ_API_URL', 'https://api.groq.com/openai/v1'),
+        'key' => env('GROQ_API_KEY'),
+        'model' => env('GROQ_MODEL', 'llama-3.1-8b-instant'),
+    ],
 ];
