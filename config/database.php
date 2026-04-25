@@ -119,38 +119,36 @@ return [
     |
     */
 
-    'redis' => [
-        'client' => env('REDIS_CLIENT', 'phpredis'),
+'redis' => [
+    'client' => env('REDIS_CLIENT', 'phpredis'),
 
-        'default' => [
-            'url'      => env('REDIS_URL'),
-            'host'     => env('REDIS_HOST', '127.0.0.1'),
-            'port'     => env('REDIS_PORT', '6379'),
-            'password' => env('REDIS_PASSWORD', null),
-            'scheme'   => env('REDIS_SCHEME', 'tcp'),
-            'database' => '0',
-            'options'  => [
-                'ssl' => [
-                    'verify_peer'      => false,
-                    'verify_peer_name' => false,
-                ],
-            ],
-        ],
-
-        'cache' => [
-            'url'      => env('REDIS_URL'),
-            'host'     => env('REDIS_HOST', '127.0.0.1'),
-            'port'     => env('REDIS_PORT', '6379'),
-            'password' => env('REDIS_PASSWORD', null),
-            'scheme'   => env('REDIS_SCHEME', 'tcp'),
-            'database' => '1',
-            'options'  => [
-                'ssl' => [
-                    'verify_peer'      => false,
-                    'verify_peer_name' => false,
-                ],
+    'default' => [
+        'scheme' => 'tls',
+        'host' => env('REDIS_HOST', '127.0.0.1'),
+        'port' => env('REDIS_PORT', 6380),
+        'password' => env('REDIS_PASSWORD', null),
+        'database' => 0,
+        'context' => [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
             ],
         ],
     ],
+
+    'cache' => [
+        'scheme' => 'tls',
+        'host' => env('REDIS_HOST', '127.0.0.1'),
+        'port' => env('REDIS_PORT', 6380),
+        'password' => env('REDIS_PASSWORD', null),
+        'database' => 1,
+        'context' => [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ],
+        ],
+    ],
+],
 
 ];
