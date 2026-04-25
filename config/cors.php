@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:5173', 'http://127.0.0.1:5173', 'https://finance-tracking-frontend-yogf.vercel.app'],
+    'allowed_origins' => ['http://localhost:5173', 'http://127.0.0.1:5173', 'https://finance-tracking-frontend-n9ed2s7tj-mohammeds-projects-dfbef21c.vercel.app'],
 
     'allowed_origins_patterns' => [],
 
