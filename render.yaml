@@ -1,0 +1,59 @@
+services:
+  - type: web
+    name: laravel-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      # Laravel App
+      - key: APP_NAME
+        value: "My Laravel App"
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        value: https://laravel-api.onrender.com
+
+      # Neon PostgreSQL
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        sync: false  # Set manually in dashboard: your-neon-host.neon.tech
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        sync: false  # Set manually in dashboard: your_database_name
+      - key: DB_USERNAME
+        sync: false  # Set manually in dashboard: your_neon_user
+      - key: DB_PASSWORD
+        sync: false  # Set manually in dashboard: your_neon_password
+      - key: DB_SSLMODE
+        value: require
+
+      # Laravel Config
+      - key: BROADCAST_DRIVER
+        value: log
+      - key: CACHE_DRIVER
+        value: file
+      - key: FILESYSTEM_DISK
+        value: local
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: SESSION_DRIVER
+        value: file
+      - key: SESSION_LIFETIME
+        value: 120
+
+      # Mail (optional - set if needed)
+      - key: MAIL_MAILER
+        value: log
+
+    buildFilter:
+      paths:
+        - ./**
+      ignoredPaths:
+        - node_modules/**
+        - vendor/**
