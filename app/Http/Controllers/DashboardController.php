@@ -93,7 +93,7 @@ class DashboardController extends Controller
             });
 
         return [
-            'total_balance' => $totalIncome - $totalExpenses,
+            'total_balance' => $totalIncome - abs($totalExpenses),
             'monthly_income' => $monthlyIncome,
             'monthly_expenses' => $monthlyExpenses,
             'weekly_savings' => $weeklySavings,
