@@ -19,18 +19,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group.
 |
 */
-Route::get('/test-mail', function () {
-    try {
-        Mail::raw('Test email from Finance Tracker!', function ($m) {
-            $m->to('mohammedelbardan82@gmail.com')
-              ->subject('Test Finance Tracker');
-        });
-        return 'Email sent successfully!';
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
-});
-
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 
