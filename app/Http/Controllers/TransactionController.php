@@ -101,6 +101,9 @@ class TransactionController extends Controller
         $userId = $request->user()->id;
         CacheService::invalidateDashboard($userId);
         CacheService::invalidateTransactions($userId);
+        CacheService::invalidateBudgets($userId);
+
+        app(BudgetAlertService::class)->checkAlerts($userId);
 
         return $this->success(['transaction' => $transaction], 'Transaction updated');
     }

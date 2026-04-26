@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Jobs\SendBudgetAlertEmail;
 use App\Models\Budget;
 use App\Models\Transaction;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -22,6 +24,7 @@ class BudgetAlertService
             ->get();
 
         $alerts = [];
+        $user = User::find($userId);
 
         foreach ($budgets as $budget) {
             $spent = abs(Transaction::forUser($userId)
@@ -34,8 +37,10 @@ class BudgetAlertService
 
             if ($percentage >= 100) {
                 $alertLevel = 'danger';
+                $emailType = 'exceeded';
             } elseif ($percentage >= 80) {
                 $alertLevel = 'warning';
+                $emailType = 'warning';
             } else {
                 continue;
             }
@@ -44,6 +49,23 @@ class BudgetAlertService
 
             if (!Cache::has($cacheKey)) {
                 Cache::put($cacheKey, true, $endOfMonth);
+
+                // Dispatch email job with 5 second delay
+                $emailCacheKey = "budget_email_{$emailType}_{$userId}_{$budget->id}_{$month}_{$year}";
+                if (!Cache::has($emailCacheKey) && $user) {
+                    Cache::put($emailCacheKey, true, $endOfMonth);
+                    
+                    SendBudgetAlertEmail::dispatch(
+                        $user,
+                        $budget->category?->name ?? 'Unknown',
+                        $budget->category?->icon ?? '💰',
+                        $spent,
+                        $budget->amount,
+                        $emailType,
+                        $percentage,
+                        config('app.url')
+                    )->delay(now()->addSeconds(5))->onQueue('emails');
+                }
             }
 
             $alerts[] = [

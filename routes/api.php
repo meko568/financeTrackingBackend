@@ -75,4 +75,27 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/ai/chat', [AIController::class, 'chat']);
 
     Route::get('/budget-alerts', [BudgetAlertController::class, 'index']);
+
+    // Test route for budget email (local only)
+    if (app()->environment('local')) {
+        Route::get('/test-budget-email', function () {
+            $user = request()->user();
+            if (!$user || !$user->email) {
+                return response()->json(['error' => 'User must have an email address'], 400);
+            }
+
+            \App\Jobs\SendBudgetAlertEmail::dispatch(
+                $user,
+                'Food',
+                '🍔',
+                880.00,
+                1100.00,
+                'warning',
+                80.0,
+                config('app.url')
+            )->onQueue('emails');
+
+            return response()->json(['message' => 'Test budget warning email queued']);
+        });
+    }
 });
