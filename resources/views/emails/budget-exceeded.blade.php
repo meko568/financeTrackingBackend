@@ -83,7 +83,7 @@
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 30px 0;">
                                 <tr>
                                     <td style="text-align: center;">
-                                        <a href="{{ $dashboardUrl }}" style="display: inline-block; background: linear-gradient(135deg, #FF2157 0%, #FF6B6B 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 600;">Review Transactions</a>
+                                        <a href="https://finance-tracking-frontend-three.vercel.app/transactions" style="display: inline-block; background: linear-gradient(135deg, #FF2157 0%, #FF6B6B 100%); color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 600;">Review Transactions</a>
                                     </td>
                                 </tr>
                             </table>
