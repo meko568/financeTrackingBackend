@@ -25,11 +25,11 @@ class BudgetController extends Controller
             ->where('year', $year)
             ->get()
             ->map(function (Budget $budget) use ($user, $month, $year) {
-                $spent = Transaction::forUser($user->id)
+                $spent = abs(Transaction::forUser($user->id)
                     ->byType('expense')
                     ->where('category_id', $budget->category_id)
                     ->forMonth($month, $year)
-                    ->sum('amount');
+                    ->sum('amount'));
 
                 return [
                     'budget' => $budget,
@@ -51,11 +51,11 @@ class BudgetController extends Controller
             ->where('year', $year)
             ->get()
             ->map(function (Budget $budget) use ($userId, $month, $year) {
-                $spent = Transaction::forUser($userId)
+                $spent = abs(Transaction::forUser($userId)
                     ->byType('expense')
                     ->where('category_id', $budget->category_id)
                     ->forMonth($month, $year)
-                    ->sum('amount');
+                    ->sum('amount'));
 
                 return [
                     'budget' => $budget,
@@ -96,11 +96,11 @@ class BudgetController extends Controller
             ->where('year', $year)
             ->get()
             ->map(function (Budget $budget) use ($user, $month, $year) {
-                $spent = Transaction::forUser($user->id)
+                $spent = abs(Transaction::forUser($user->id)
                     ->byType('expense')
                     ->where('category_id', $budget->category_id)
                     ->forMonth($month, $year)
-                    ->sum('amount');
+                    ->sum('amount'));
 
                 $percent = $budget->amount > 0 ? min(round(($spent / $budget->amount) * 100), 150) : 0;
                 $status = $percent >= 100 ? 'danger' : ($percent >= 80 ? 'warning' : 'ok');
