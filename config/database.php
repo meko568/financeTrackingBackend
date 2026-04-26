@@ -122,26 +122,25 @@ return [
 'redis' => [
     'client' => env('REDIS_CLIENT', 'phpredis'),
 
-'default' => [
-    'scheme' => 'tls',
-    'host' => env('REDIS_HOST', '127.0.0.1'),
-    'port' => env('REDIS_PORT', 6379),
-    'password' => env('REDIS_PASSWORD', null),
-    'database' => env('REDIS_DB', 0),
-    'read_timeout' => 5.0,
-    'timeout' => 5.0,
-    'context' => [
-        'ssl' => [
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true,
+    'default' => [
+        'scheme' => 'tls',
+        'host' => env('REDIS_HOST', '127.0.0.1'),
+        'port' => env('REDIS_PORT', 6380),
+        'password' => env('REDIS_PASSWORD', null),
+        'database' => env('REDIS_DB', 0),
+        'read_timeout' => 5.0,
+        'timeout' => 5.0,
+        'context' => [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ],
         ],
     ],
-],
 
     'cache' => [
-        'url' => env('REDIS_URL'),
-        'scheme' => env('REDIS_SCHEME', 'tls'),
+        'scheme' => 'tls',
         'host' => env('REDIS_HOST', '127.0.0.1'),
         'port' => env('REDIS_PORT', 6380),
         'password' => env('REDIS_PASSWORD', null),
@@ -156,7 +155,6 @@ return [
             ],
         ],
     ],
-    // ✅ شلنا الـ queue connection من Redis
 ],
 
 ];
