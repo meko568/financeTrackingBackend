@@ -64,7 +64,7 @@ class BudgetAlertService
                         $emailType,
                         $percentage,
                         config('app.url')
-                    )->delay(now()->addSeconds(5))->onQueue('emails');
+                    );
                 }
             }
 

@@ -66,7 +66,7 @@ class SendBudgetAlertEmail implements ShouldQueue
             if ($this->type === 'warning') {
                 $remainingAmount = $this->budgetLimit - $this->amountSpent;
                 Mail::to($this->user->email)
-                    ->queue(new BudgetWarningMail(
+                    ->send(new BudgetWarningMail(
                         $this->user->name ?? 'User',
                         $this->categoryName,
                         $this->categoryIcon,
@@ -80,7 +80,7 @@ class SendBudgetAlertEmail implements ShouldQueue
             } elseif ($this->type === 'exceeded') {
                 $exceededAmount = $this->amountSpent - $this->budgetLimit;
                 Mail::to($this->user->email)
-                    ->queue(new BudgetExceededMail(
+                    ->send(new BudgetExceededMail(
                         $this->user->name ?? 'User',
                         $this->categoryName,
                         $this->categoryIcon,
