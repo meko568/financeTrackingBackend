@@ -18,15 +18,19 @@ class Transaction extends Model
         'notes',
         'transaction_date',
         'is_recurring',
-        'recurring_interval',
+        'recurring_frequency',
+        'recurring_end_date',
+        'next_due_date',
     ];
 
     protected $casts = [
         'type' => 'string',
-        'recurring_interval' => 'string',
+        'recurring_frequency' => 'string',
         'is_recurring' => 'boolean',
         'amount' => 'decimal:2',
         'transaction_date' => 'date',
+        'recurring_end_date' => 'date',
+        'next_due_date' => 'date',
     ];
 
     public function user()

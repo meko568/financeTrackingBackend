@@ -21,6 +21,8 @@ class Kernel extends ConsoleKernel
                 }
             });
         })->weekly()->onOneServer();
+
+        $schedule->command('transactions:process-recurring')->daily();
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AIController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BudgetAlertController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
@@ -72,5 +73,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/budgets/current-month', [BudgetController::class, 'getCurrentMonthSummary']);
 
     Route::post('/ai/chat', [AIController::class, 'chat']);
-    
+
+    Route::get('/budget-alerts', [BudgetAlertController::class, 'index']);
 });

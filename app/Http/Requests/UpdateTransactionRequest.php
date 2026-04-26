@@ -21,7 +21,9 @@ class UpdateTransactionRequest extends FormRequest
             'notes' => ['nullable', 'string'],
             'transaction_date' => ['sometimes', 'required', 'date'],
             'is_recurring' => ['sometimes', 'boolean'],
-            'recurring_interval' => ['nullable', 'in:daily,weekly,monthly'],
+            'recurring_frequency' => ['nullable', 'in:daily,weekly,monthly,yearly'],
+            'recurring_end_date' => ['nullable', 'date', 'after_or_equal:transaction_date'],
+            'next_due_date' => ['nullable', 'date', 'after_or_equal:transaction_date'],
         ];
     }
 }

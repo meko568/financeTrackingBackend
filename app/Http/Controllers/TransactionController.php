@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Transaction;
+use App\Services\BudgetAlertService;
 use App\Services\CacheService;
 use App\Traits\ApiResponse;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -51,7 +53,13 @@ class TransactionController extends Controller
 
     public function store(StoreTransactionRequest $request)
     {
-        $transaction = Transaction::create(array_merge($request->validated(), [
+        $validated = $request->validated();
+
+        if (!empty($validated['is_recurring']) && empty($validated['next_due_date'])) {
+            $validated['next_due_date'] = $validated['transaction_date'];
+        }
+
+        $transaction = Transaction::create(array_merge($validated, [
             'user_id' => $request->user()->id,
         ]));
 
@@ -59,6 +67,8 @@ class TransactionController extends Controller
         CacheService::invalidateDashboard($userId);
         CacheService::invalidateTransactions($userId);
         CacheService::invalidateBudgets($userId);
+
+        app(BudgetAlertService::class)->checkAlerts($userId);
 
         return $this->success(['transaction' => $transaction], 'Transaction created', 201);
     }
@@ -80,7 +90,13 @@ class TransactionController extends Controller
             return $this->error('Transaction not found.', [], 404);
         }
 
-        $transaction->update($request->validated());
+        $validated = $request->validated();
+
+        if (!empty($validated['is_recurring']) && empty($validated['next_due_date']) && empty($transaction->next_due_date)) {
+            $validated['next_due_date'] = $validated['transaction_date'] ?? $transaction->transaction_date;
+        }
+
+        $transaction->update($validated);
 
         $userId = $request->user()->id;
         CacheService::invalidateDashboard($userId);
