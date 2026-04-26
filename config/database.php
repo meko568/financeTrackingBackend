@@ -125,7 +125,7 @@ return [
     'default' => [
         'scheme' => 'tls',
         'host' => env('REDIS_HOST', '127.0.0.1'),
-        'port' => env('REDIS_PORT', 6380),
+        'port' => env('REDIS_PORT', 6379),
         'password' => env('REDIS_PASSWORD', null),
         'database' => env('REDIS_DB', 0),
         'read_timeout' => 5.0,
@@ -142,7 +142,7 @@ return [
     'cache' => [
         'scheme' => 'tls',
         'host' => env('REDIS_HOST', '127.0.0.1'),
-        'port' => env('REDIS_PORT', 6380),
+        'port' => env('REDIS_PORT', 6379),
         'password' => env('REDIS_PASSWORD', null),
         'database' => env('REDIS_CACHE_DB', 1),
         'read_timeout' => 5.0,
